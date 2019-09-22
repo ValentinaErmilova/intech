@@ -1,15 +1,11 @@
 package com.example.intech.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Date;
 
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 @Table(name="messages")
 public class Message {
     @Id
@@ -23,6 +19,11 @@ public class Message {
 
     @Temporal(TemporalType.DATE)
     private Date createAt;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId")
+    @JsonIgnore
+    private User user;
 
     public Message() {}
 
@@ -56,5 +57,13 @@ public class Message {
 
     public void setMTo(String mTo) {
         this.mTo = mTo;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

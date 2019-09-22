@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AppController {
@@ -30,8 +28,7 @@ public class AppController {
     }
 
     @PostMapping("/main")
-    public String add(@RequestParam String text, Model model) {
-        Message message = new Message(text);
+    public String add(Message message, Model model) {
         messageDAO.save(message);
 
         Iterable<Message> listOfMessages = messageDAO.findAll();

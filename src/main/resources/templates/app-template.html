@@ -14,7 +14,7 @@
 <p th:text="'Hello, ' + ${some} + '!'" />
 
 <div>
-  <form method="post">
+  <form th:action="@{/main}" method="post" >
     <input type="text" name="text"/>
     <button type="submit">send</button>
   </form>

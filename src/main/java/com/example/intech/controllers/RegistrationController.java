@@ -13,21 +13,20 @@ public class RegistrationController {
     @Autowired
     private UserDAO userDAO;
 
-    @GetMapping
+    @GetMapping("/registration")
     public String registration() {
         return "registration";
     }
 
-    @PostMapping
+    @PostMapping("/registration")
     public String addUser(User user, Model model) {
-        User userDB = userDAO.findByName(user.getName());
-        System.out.println("===userDB==" + userDB);
+        User userDB = userDAO.findByUsername(user.getUsername());
         if (userDB != null) {
-            System.out.println("===2==");
             model.addAttribute("message", "User exists!");
             return "registration";
         }
         user.setRole(User.Role.User);
+        user.setActive(true);
         userDAO.save(user);
         return "redirect:/login";
     }

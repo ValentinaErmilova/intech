@@ -7,10 +7,10 @@
 <body>
 Add new users
 
-<span th:if="${message}">Welcome, Guest</span>
+<span th:if="${message}" th:text="${message}"></span>
 
 <form th:action="@{/registration}" method="post">
-  <div><label> User Name : <input type="text" name="name"/> </label></div>
+  <div><label> User Name : <input type="text" name="username"/> </label></div>
   <div><label> Password: <input type="password" name="password"/> </label></div>
   <div><input type="submit" value="create"/></div>
 </form>

@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource source;
+    private final static String USERNAME_QUERY = "SELECT username, password, active FROM users WHERE username=?";
+    private final static String AUTHORITIES_USERNAME_QUERY = "SELECT username, password FROM users WHERE username=?";
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(source)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select * from user where name=?");
+                .usersByUsernameQuery(USERNAME_QUERY)
+                .authoritiesByUsernameQuery(AUTHORITIES_USERNAME_QUERY);
     }
 }
