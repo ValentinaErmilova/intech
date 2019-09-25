@@ -23,15 +23,16 @@ public class Message {
     @Column(name = "create_at")
     private Date createAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
     public Message() {}
 
-    public Message(String text) {
+    public Message(String text, User user) {
         this.text = text;
+        this.user = user;
     }
 
     public Integer getId() {

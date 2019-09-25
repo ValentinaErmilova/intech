@@ -8,21 +8,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
 
 @Controller
+@RequestMapping("/registration")
 public class RegistrationController {
-    @Autowired
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
-    @GetMapping("/registration")
+    public RegistrationController(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+    @GetMapping
     public String registration() {
         return "registration";
     }
 
-    @PostMapping("/registration")
-    public String addUser(User user, Model model) {
+    @PostMapping
+    public String create(User user, Model model) {
         User userDB = userDAO.findByUsername(user.getUsername());
         if (userDB != null) {
             model.addAttribute("message", "User exists!");
