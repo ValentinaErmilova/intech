@@ -1,6 +1,7 @@
 package com.example.intech.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,11 +18,13 @@ public class Message {
 
     private String text;
 
-    @Temporal(TemporalType.DATE)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_at")
     private Date createAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 

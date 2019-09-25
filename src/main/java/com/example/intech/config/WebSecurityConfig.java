@@ -1,6 +1,6 @@
 package com.example.intech.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.intech.service.UserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,10 +13,11 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private DataSource source;
-    private final static String USERNAME_QUERY = "SELECT username, password, active FROM users WHERE username=?";
-    private final static String AUTHORITIES_USERNAME_QUERY = "SELECT username, password FROM users WHERE username=?";
+    private final UserService userService;
+
+    public WebSecurityConfig(DataSource source, UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,9 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(source)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery(USERNAME_QUERY)
-                .authoritiesByUsernameQuery(AUTHORITIES_USERNAME_QUERY);
+        auth.userDetailsService(userService)
+                .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 }
