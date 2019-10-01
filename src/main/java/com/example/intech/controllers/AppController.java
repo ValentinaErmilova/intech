@@ -9,6 +9,6 @@ public class AppController {
 
     @GetMapping("/")
     public String greeting(Model model) {
-        return "greeting";
+        return "app-template";
     }
 }
