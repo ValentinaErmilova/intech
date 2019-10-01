@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/messages")
 public class MessageController {
@@ -22,7 +24,6 @@ public class MessageController {
     @GetMapping
     public String messages(Model model) {
         Iterable<Message> listOfMessages = messageDAO.findAll();
-        model.addAttribute("some", "i love you Dima!");
         model.addAttribute("messages", listOfMessages);
         return "messages";
     }
@@ -32,7 +33,7 @@ public class MessageController {
         message.setUser(user);
         messageDAO.save(message);
 
-        Iterable<Message> listOfMessages = messageDAO.findAll();
+        Optional<Message> listOfMessages = messageDAO.findById(user.getId());
         model.addAttribute("messages", listOfMessages);
 
         return "messages";

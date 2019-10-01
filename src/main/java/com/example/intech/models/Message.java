@@ -11,7 +11,7 @@ import java.util.Date;
 public class Message {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String mFrom;
     private String mTo;
@@ -35,7 +35,7 @@ public class Message {
         this.user = user;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

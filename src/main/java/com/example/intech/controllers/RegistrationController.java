@@ -3,14 +3,12 @@ package com.example.intech.controllers;
 import com.example.intech.DAO.UserDAO;
 import com.example.intech.models.Role;
 import com.example.intech.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.intech.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Collections;
 
 @Controller
 @RequestMapping("/registration")
@@ -27,14 +25,15 @@ public class RegistrationController {
 
     @PostMapping
     public String create(User user, Model model) {
-        User userDB = userDAO.findByUsername(user.getUsername());
-        if (userDB != null) {
-            model.addAttribute("message", "User exists!");
+        try {
+            new UserService(userDAO).create(user, Role.User);
+        } catch (RuntimeException e) {
+            String message = String.format("Cannot create user [message=%s]", e.getMessage());
+            System.out.println(message);
+            model.addAttribute("message", message);
             return "registration";
         }
-        user.setRoles(Collections.singleton(Role.User));
-        user.setActive(true);
-        userDAO.save(user);
+
         return "redirect:/login";
     }
 }

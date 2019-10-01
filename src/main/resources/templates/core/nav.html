@@ -16,6 +16,10 @@
           <a class="nav-link" href="/users">Users</a>
         </li>
       </ul>
+
+      <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out" class="btn btn-primary"/>
+      </form>
     </div>
   </nav>
 </div>

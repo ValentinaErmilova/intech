@@ -10,6 +10,9 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 public class User implements UserDetails {
+    public final static String DEFAULT_ADMIN_NAME = "admin";
+    public final static String DEFAULT_ADMIN_PASSWORD = "admin";
+
     public User() {}
 
     @Id
@@ -29,10 +32,6 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/users")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('Admin')")
 public class UserController {
     private final UserDAO userDAO;
 
