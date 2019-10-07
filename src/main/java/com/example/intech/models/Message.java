@@ -13,9 +13,10 @@ public class Message {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    private String mFrom;
-    private String mTo;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "to_user_id")
+    @JsonIgnore
+    private User toUser;
     private String text;
 
     @CreationTimestamp
@@ -24,15 +25,15 @@ public class Message {
     private Date createAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "from_user_id")
     @JsonIgnore
-    private User user;
+    private User fromUser;
 
     public Message() {}
 
     public Message(String text, User user) {
         this.text = text;
-        this.user = user;
+        this.fromUser = user;
     }
 
     public Long getId() {
@@ -47,27 +48,23 @@ public class Message {
         this.text = text;
     }
 
-    public String getMFrom() {
-        return this.mFrom;
+    public User getToUser() {
+        return this.toUser;
     }
 
-    public void setMFrom(String mFrom) {
-        this.mFrom = mFrom;
+    public void setToUser(User toUser) {
+        this.toUser = toUser;
     }
 
-    public String getMTo() {
-        return this.mTo;
+    public User getFromUser() {
+        return fromUser;
     }
 
-    public void setMTo(String mTo) {
-        this.mTo = mTo;
+    public void setFromUser(User fromUser) {
+        this.fromUser = fromUser;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public Date getCreateAt() {
+        return createAt;
     }
 }
