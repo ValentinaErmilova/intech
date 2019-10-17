@@ -29,8 +29,10 @@ public class UserController {
         return "users/edit";
     }
 
-    @PostMapping("{user}")
-    public String update(@PathVariable User user, Model model) {
+    @PutMapping("{user}")
+    public String update(@ModelAttribute("user") User user,
+                         Model model) {
+        userDAO.save(user);
         model.addAttribute("user", user);
         return "redirect:/users";
     }
